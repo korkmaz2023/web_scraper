@@ -9,12 +9,23 @@ import pandas as pd
 SLEEP_TIME = 2
 
 # Tarayıcıyı konfigüre edip başlatma
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
 def start_driver():
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(executable_path='/path/to/chromedriver', options=options)
+    options.add_argument('--headless')  # Tarayıcı arka planda çalışır (kullanıcı arayüzü olmadan)
+    options.add_argument('--no-sandbox')  # Bazı sanal ortam sorunlarını çözer
+    options.add_argument('--disable-dev-shm-usage')  # Paylaşılan bellek sorunlarını çözer
+
+    # ChromeDriver'ın bulunduğu yeri belirtmek için Service kullanıyoruz
+    service = Service(executable_path='/path/to/chromedriver')
+
+    # WebDriver'ı başlatıyoruz
+    driver = webdriver.Chrome(service=service, options=options)
+    
+    return driver
+
 
 # Ana sayfadan kategori linklerini alma
 def get_category_urls(driver):
