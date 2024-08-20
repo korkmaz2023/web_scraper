@@ -11,9 +11,10 @@ SLEEP_TIME = 2
 # Tarayıcıyı konfigüre edip başlatma
 def start_driver():
     options = webdriver.ChromeOptions()
-    options.add_argument('start-maximized')
-    driver = webdriver.Chrome(options=options)
-    return driver
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(executable_path='/path/to/chromedriver', options=options)
 
 # Ana sayfadan kategori linklerini alma
 def get_category_urls(driver):
